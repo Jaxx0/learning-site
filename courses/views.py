@@ -1,8 +1,28 @@
 from itertools import chain
 
+from django.contrib.auth.decorators import login_required
+from django.core.checks import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
 from . import models
+from . import forms
+
+
+@login_required
+def quiz_create(request, course_pk):
+    form = forms.QuizForm()
+    course = get_object_or_404(models.Course, pk=course_pk)
+
+    if request.method == 'POST':
+        form = forms.QuizForm(request.POST)
+        if form.is_valid():
+            quiz = form.save(commit=False)
+            # quiz.course = course
+            # quiz.save()
+            # messages.add_message(request, messages.SUCCESS, 'Quiz Added!')
+            return HttpResponseRedirect(quiz.get_absolute_url())
+    return render(request, 'courses/quiz_form.html', {'form': form, 'course': course})
 
 
 def course_list(request):

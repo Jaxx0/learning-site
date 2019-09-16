@@ -1,9 +1,9 @@
-from django.forms import forms
+from django.forms import ModelForm
 
 from . import models
 
 
-class QuizForm(forms.Form):
+class QuizForm(ModelForm):
     class Meta:
         model = models.Quiz
         fields = [
@@ -14,7 +14,7 @@ class QuizForm(forms.Form):
         ]
 
 
-class TrueFalseQuestionForm(forms.Form):
+class TrueFalseQuestionForm(ModelForm):
     class Meta:
         model = models.TrueFalseQuestion
         fields = [
@@ -23,11 +23,11 @@ class TrueFalseQuestionForm(forms.Form):
         ]
 
 
-class MultipleChoiceQuestionForm(forms.Form):
+class MultipleChoiceQuestionForm(ModelForm):
     class Meta:
         model = models.TrueFalseQuestion
         fields = [
             'order',
             'prompt',
-            'shuffle_answers'
+            # 'shuffle_answers',
         ]
