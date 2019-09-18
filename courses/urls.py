@@ -9,5 +9,6 @@ urlpatterns = [
     path('<int:pk>', views.course_detail, name='detail'),
     path('<int:course_pk>/create_quiz/', views.quiz_create, name='create_quiz'),
     path('<int:course_pk>/edit_quiz/<int:quiz_pk>/', views.quiz_edit, name='edit_quiz'),
+    path('<int:quiz_pk>/edit_question/<int:question_pk>/', views.edit_question, name='edit_question'),
     path('<int:quiz_pk>/create_question/<question_type>mc|tf/', views.create_question, name='create_question'),
 ]
