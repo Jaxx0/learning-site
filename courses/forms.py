@@ -10,7 +10,7 @@ class QuizForm(ModelForm):
             'title',
             'description',
             'order',
-            'total_questions',
+            'total_questions'
         ]
 
 
@@ -19,15 +19,15 @@ class TrueFalseQuestionForm(ModelForm):
         model = models.TrueFalseQuestion
         fields = [
             'order',
-            'prompt',
+            'prompt'
         ]
 
 
 class MultipleChoiceQuestionForm(ModelForm):
     class Meta:
-        model = models.TrueFalseQuestion
+        model = models.MultipleChoiceQuestion
         fields = [
             'order',
             'prompt',
-            # 'shuffle_answers',
+            'shuffle_answers'
         ]

@@ -1,9 +1,10 @@
 from itertools import chain
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.checks import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 
 from . import models
 from . import forms
@@ -18,11 +19,43 @@ def quiz_create(request, course_pk):
         form = forms.QuizForm(request.POST)
         if form.is_valid():
             quiz = form.save(commit=False)
-            # quiz.course = course
-            # quiz.save()
-            # messages.add_message(request, messages.SUCCESS, 'Quiz Added!')
+            quiz.course = course
+            quiz.save()
+            messages.add_message(request, messages.SUCCESS, 'Quiz Added!')
             return HttpResponseRedirect(quiz.get_absolute_url())
     return render(request, 'courses/quiz_form.html', {'form': form, 'course': course})
+
+
+@login_required
+def quiz_edit(request, course_pk, quiz_pk):
+    quiz = get_object_or_404(models.Quiz, pk=quiz_pk, course_id=course_pk)
+    form = forms.QuizForm(instance=quiz)
+    if request.method == 'POST':
+        form = forms.QuizForm(instance=quiz, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'updated {}'.format(form.instance.title))
+            return HttpResponseRedirect(quiz.get_absolute_url())
+    return render(request, 'courses/quiz_form.html', {'form': form, 'course': quiz.course})
+
+
+@login_required
+def create_question(request, quiz_pk, question_type):
+    quiz = get_object_or_404(models.Quiz, pk=quiz_pk)
+    if question_type == 'tf':
+        form_class = forms.TrueFalseQuestionForm
+    else:
+        form_class = forms.MultipleChoiceQuestionForm
+    form = form_class()
+    if request.method == 'POST':
+        form = form_class(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.quiz = quiz
+            question.save()
+            messages.success(request, "Added question")
+            return HttpResponseRedirect(quiz.get_absolute_url())
+    return render(request, 'courses/question_form.html', {'form': form, 'quiz': quiz})
 
 
 def course_list(request):
@@ -38,9 +71,9 @@ def course_detail(request, pk):
 
 def text_detail(request, course_pk, step_pk):
     step = get_object_or_404(models.Text, course_id=course_pk, pk=step_pk)
-    return render(request, 'courses/step_detail.html', {'step': step})
+    return render(request, 'courses/text_detail.html', {'step': step})
 
 
 def quiz_detail(request, course_pk, step_pk):
     step = get_object_or_404(models.Quiz, course_id=course_pk, pk=step_pk)
-    return render(request, 'courses/step_detail.html', {'step': step})
+    return render(request, 'courses/quiz_detail.html', {'step': step})
