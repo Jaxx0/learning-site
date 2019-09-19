@@ -1,4 +1,5 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, forms
+from django.forms import modelformset_factory
 
 from . import models
 
@@ -41,3 +42,11 @@ class AnswerForm(ModelForm):
             'text',
             'correct'
         ]
+
+
+AnswerFormSet = modelformset_factory(
+    model=models.Answer,
+    form=AnswerForm,
+    extra=2
+)
+
