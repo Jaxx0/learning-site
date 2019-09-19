@@ -67,7 +67,7 @@ class Answer(models.Model):
         ordering = ['order', ]
 
     def get_absolute_url(self):
-        return self.quiz.get_absolute_url()
+        return self.question.get_absolute_url()
 
     def __str__(self):
         return self.text

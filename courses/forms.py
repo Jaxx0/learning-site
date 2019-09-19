@@ -31,3 +31,13 @@ class MultipleChoiceQuestionForm(ModelForm):
             'prompt',
             'shuffle_answers'
         ]
+
+
+class AnswerForm(ModelForm):
+    class Meta:
+        model = models.Answer
+        fields = [
+            'order',
+            'text',
+            'correct'
+        ]

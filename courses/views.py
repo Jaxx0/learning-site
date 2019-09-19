@@ -77,6 +77,22 @@ def edit_question(request, quiz_pk, question_pk):
     return render(request, 'courses/question_form.html', {'form': form, 'quiz': question.quiz})
 
 
+@login_required
+def create_answer(request, question_pk):
+    form = forms.AnswerForm()
+    question = get_object_or_404(models.Question, pk=question_pk)
+
+    if request.method == 'POST':
+        form = forms.AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.question = question
+            answer.save()
+            messages.success(request, 'Created Answer')
+            return HttpResponseRedirect(answer.get_absolute_url())
+    return render(request, 'courses/answer_form.html', {'form': form, 'question': question})
+
+
 def course_list(request):
     courses = models.Course.objects.all()
     return render(request, 'courses/course_list.html', {'courses': courses})

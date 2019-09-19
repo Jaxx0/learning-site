@@ -12,11 +12,12 @@
         <article>
             {{ block.super }}
             <h1>{{ step.title }}</h1>
+            <h2>{{ question.answer_set.all }}</h2>
             <ul class="no-bullet">
                 {% for question in step.question_set.all %}
                 <li>
                     <p>{{ question.prompt }}</p>
-                    {% for answer in step.answer_set.all %}
+                    {% for answer in question.answer_set.all %}
                         <div class="callout">{{ answer.text }}</div>
                     {% endfor %}
                     {% if user.is_authenticated %}
