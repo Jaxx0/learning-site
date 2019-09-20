@@ -1,5 +1,5 @@
 from django.forms import ModelForm, forms
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory, inlineformset_factory
 
 from . import models
 
@@ -50,3 +50,12 @@ AnswerFormSet = modelformset_factory(
     extra=2
 )
 
+
+AnswerInlineFormSet = inlineformset_factory(
+    models.Question,
+    models.Answer,
+    extra=2,
+    fields=('order', 'text', 'correct'),
+    formset=AnswerFormSet,
+    min_num=1
+)

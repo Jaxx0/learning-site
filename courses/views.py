@@ -47,15 +47,21 @@ def create_question(request, quiz_pk, question_type):
     else:
         form_class = forms.MultipleChoiceQuestionForm
     form = form_class()
+    answer_forms = forms.AnswerInlineFormSet(queryset=models.Answer.objects.none())
     if request.method == 'POST':
         form = form_class(request.POST)
-        if form.is_valid():
+        answer_forms = forms.AnswerInlineFormSet(request.POST, queryset=models.Answer.objects.none())
+        if form.is_valid() and answer_forms.is_valid():
             question = form.save(commit=False)
             question.quiz = quiz
             question.save()
+            answers = answer_forms.save(commit=-False)
+            for answer in answers:
+                answer.quiz = quiz
+                answer.save()
             messages.success(request, "Added question")
             return HttpResponseRedirect(quiz.get_absolute_url())
-    return render(request, 'courses/question_form.html', {'form': form, 'quiz': quiz})
+    return render(request, 'courses/question_form.html', {'form': form, 'quiz': quiz, 'formset': answer_forms})
 
 
 @login_required
@@ -69,12 +75,19 @@ def edit_question(request, quiz_pk, question_pk):
         question = question.multiplechoicequestion
 
     form = form_class(instance=question)
+    answer_forms = forms.AnswerInlineFormSet(queryset=form.instance.answer_set.all())
     if request.method == 'POST':
         form = form_class(instance=question, data=request.POST)
-        form.save()
+        answer_forms = forms.AnswerInlineFormSet(request.POST, queryset=form.instance.answer_set.all())
+        if form.is_valid() and answer_forms.is_valid():
+            form.save()
+            answers = answer_forms.save(commit=False)
+            for answer in answers:
+                answer.question = question
+                answer.save()
         messages.success(request, "Updated {}".format(question.prompt))
         return HttpResponseRedirect(question.quiz.get_absolute_url())
-    return render(request, 'courses/question_form.html', {'form': form, 'quiz': question.quiz})
+    return render(request, 'courses/question_form.html', {'form': form, 'quiz': question.quiz, 'formset': answer_forms})
 
 
 @login_required
@@ -113,3 +126,6 @@ def text_detail(request, course_pk, step_pk):
 def quiz_detail(request, course_pk, step_pk):
     step = get_object_or_404(models.Quiz, course_id=course_pk, pk=step_pk)
     return render(request, 'courses/quiz_detail.html', {'step': step})
+
+
+
