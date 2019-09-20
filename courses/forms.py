@@ -15,7 +15,14 @@ class QuizForm(ModelForm):
         ]
 
 
-class TrueFalseQuestionForm(ModelForm):
+class QuestionForm(ModelForm):
+    class Media:
+        css = {'all': 'courses/css/order.css', }
+        js = ('courses/js/vendor/jquery.fn.sortable.min.js',
+              'courses/js/order.js')
+
+
+class TrueFalseQuestionForm(QuestionForm):
     class Meta:
         model = models.TrueFalseQuestion
         fields = [
@@ -24,7 +31,7 @@ class TrueFalseQuestionForm(ModelForm):
         ]
 
 
-class MultipleChoiceQuestionForm(ModelForm):
+class MultipleChoiceQuestionForm(QuestionForm):
     class Meta:
         model = models.MultipleChoiceQuestion
         fields = [
@@ -59,3 +66,4 @@ AnswerInlineFormSet = inlineformset_factory(
     formset=AnswerFormSet,
     min_num=1
 )
+

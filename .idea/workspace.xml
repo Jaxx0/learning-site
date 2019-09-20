@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6dde781-38d2-4002-9763-dc2370d07bfe" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/courses/static/courses/css/order.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/courses/static/courses/js/order.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/courses/static/courses/js/vendor/jquery.fn.sortable.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/courses/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/courses/templates/courses/question_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/courses/templates/courses/question_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/courses/templates/courses/quiz_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/courses/templates/courses/quiz_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/courses/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
@@ -29,7 +31,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/courses/templates/courses" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/courses/static" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -37,6 +39,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/courses/static" />
       <recent name="$PROJECT_DIR$/courses/templates/courses" />
     </key>
   </component>

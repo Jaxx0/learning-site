@@ -46,9 +46,24 @@
 
         <input type="submit" class="button" value="save">
     </form>
-
-
-
-
 </div>
 {% endblock %}
+
+
+{% block css %}
+    {{ form.media.css }}
+{% endblock %}
+
+{% block javascript %}
+{% load static from staticfiles %}
+    <script src="{% static 'js/vendor/jquery.formset.js' %}"></script>
+    <script>
+        $('.answer-form').formset({
+            addText: 'add answer',
+            deleteText: 'remove'
+        });
+    </script>
+    {{ form.media.js }}
+{% endblock %}
+
+
